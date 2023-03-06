@@ -3,11 +3,11 @@
 
 
 import numpy as np
-from utils import divide, normalize
+from ..utils import divide, normalize
 
 class ONMF_Ding:
     name = "ONMF-Ding"
-    def func (X,k, double = False):
+    def func (X,k, double = False, period = 100):
         if double:
             m,n = np.shape(X)
             F = np.random.rand(m,k)
@@ -15,7 +15,6 @@ class ONMF_Ding:
             S = np.random.rand(k, k)
             F_diff, G_diff = 1, 1
             count = 0
-            period = 100
             while F_diff >= 1e-5 or G_diff >= 1e-5:
                 P = X @ G @ S.T
                 temp = F @ F.T @ P
@@ -53,7 +52,6 @@ class ONMF_Ding:
             G = (np.random.rand(n, k))
             F_diff, G_diff = 1, 1
             count = 0
-            period = 10
             while F_diff >= 5e-5 or G_diff >= 5e-5:
                 P = X @ G
                 temp = F @ F.T @ P

@@ -2,21 +2,21 @@
 # Bo Li, Guoxu Zhou, and Andrzej Cichocki. Two efficient algorithms for approximately orthogonal non-negative matrix factorization. IEEE Signal Processing Letters, 22(7):843–846, 2014.
 
 import numpy as np
-from utils import divide, normalize
+from .utils import divide, normalize
 
 class HALS:
     name = "HALS"
-    def func (X, k):
+    def func (X: np.ndarray, k: int, tol: float = 1e-4, max_iter: int = 1000):
         m, n = np.shape(X)
         lbd = 1
         A = (np.random.rand(m, k))
         B = (np.random.rand(n, k))
         B = normalize (B, 0)
         A_diff, B_diff = 1, 1
-        period = 5
+        period = 10
         count = 0
         iter=0
-        while A_diff >= 1e-4 or B_diff >= 1e-4:
+        while A_diff >= tol or B_diff >= tol:
             if count == 0:
                 B_prev = np.copy(B)
                 A_prev = np.copy(A)
@@ -40,7 +40,7 @@ class HALS:
             count += 1
             if count >= period:
                 count = 0
-            if iter>1000:
+            if iter>max_iter:
                 break
             iter=iter+1
         return A, B

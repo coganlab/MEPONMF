@@ -1,5 +1,5 @@
 import numpy as np
-from Deterministic_Annealing import DA
+from .Deterministic_Annealing import DA
 
 class ONMF_DA:
     name = "ONMF-DA"
